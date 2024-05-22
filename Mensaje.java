@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+  
 /**
  * Clase Mensaje: representa un mensaje en formato texto. 
  * El texto está almacenado en una lista de strings, donde cada
@@ -72,9 +72,19 @@ public class Mensaje
      * @param linea es la línea a agregar.
      * @param pos es la posición en la cual se desea agregar la línea.
      */
-    public void agregarLinea(int pos, String linea)
+    public void agregarLinea(int pos, String linea) //pos es un parámetro que representa 
+                                                   //la posición en la que se debe insertar la línea en la lista lineas.
     {
         // TODO: Implementar este método
+        if (linea == null)
+        throw new IllegalArgumentException("La linea no debe ser null");
+        if (!esAscii (linea))
+        throw new IllegalArgumentException("La linea solo debe contener caracteres ascii");
+        if(linea.length() > LONG_MAX_LINEA)
+        throw new IllegalArgumentException ("Su longitud debe ser menor o igual a 80");
+        if (pos < 0 || pos > cantLineas())
+          throw new IllegalArgumentException("Posicion de linea invalida");
+        lineas.add(pos,linea);
     }
     
     /**
@@ -135,6 +145,23 @@ public class Mensaje
     {
         // TODO: Implementar este método sustituyendo la línea debajo, con el 
         // código de la implementación
+        //Verifica si el objeto "otro" es nulo y lanza la excepcion si lo es.
+        if (otro == null)
+        throw new IllegalArgumentException("otro debe ser distinto a null");
+        
+        // Compara la cantidad de líneas del mensaje actual con el mensaje 'otro'.
+        // Si no tienen la misma cantidad de líneas, retorna falso.
+        if(cantLineas() != otro.cantLineas())
+        return false;
+        
+        // Itera sobre cada línea del mensaje.
+        // Compara cada línea del mensaje actual con la correspondiente en 'otro'.
+        // Si alguna línea es igual, retorna verdadero. Si ninguna linea es igual, retorna falso.
+        for(int i = 0; i < cantLineas(); i++)
+        {
+            if(obtenerLinea(i).equals(otro.obtenerLinea(i)))
+            return true;
+        }
         return false;
     }
     
